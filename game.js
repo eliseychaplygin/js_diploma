@@ -7,7 +7,7 @@ class Vector {
     }
     plus(vector) {
         if (!(vector instanceof Vector)) {
-            throw 'Можно прибавлять к вектору только вектор типа Vector';
+            throw new Error ('Можно прибавлять к вектору только вектор типа Vector');
         }
         return new Vector(this.x + vector.x, this.y + vector.y);
     }
@@ -19,13 +19,13 @@ class Vector {
 class Actor {
     constructor(position = new Vector(0, 0), size = new Vector(1, 1), speed = new Vector(0, 0)) {
         if (!(position instanceof Vector) || !(size instanceof Vector) || !(speed instanceof Vector)) {
-            throw 'Один или несколько переданных аргументов не являются объектом класса Vector';
+            throw new Error('Один или несколько переданных аргументов не являются объектом класса Vector');
         }
         this.pos = position;
         this.size = size;
         this.speed = speed;
     }
-    acr() {};
+    act() {};
     get left() {
         return this.pos.x;
     }
@@ -43,7 +43,7 @@ class Actor {
     }
     isIntersect(actor) {
         if(!(actor instanceof Actor)) {
-            throw 'Переданный объект не является объектом класса Actor';
+            throw new Error('Переданный объект не является объектом класса Actor');
         }
         if (actor === this) {
             return false;
@@ -72,20 +72,20 @@ class Level {
                 return memo;
             }
             return el.length;
-        });
+        }, 0);
     }
     isFinished() {
         return this.status !== null && this.finishDelay < 0;
     }
     actorAt(actor) {
         if (!(actor instanceof Actor)) {
-            throw 'Переданный объект не является объектом класса Actor';
+            throw new Error('Переданный объект не является объектом класса Actor');
         }
         return this.actors.find(el => actor.isIntersect(el));
     }
     obstacleAt(position, size) {
         if (!(position instanceof Vector) && !(size instanceof Vector)) {
-            throw 'Один или два переданных агрумента не являются объектом класса Vector';
+            throw new Error('Один или два переданных агрумента не являются объектом класса Vector');
         }
         if ((position.y + size.y) > this.height) {
             return 'lava';
